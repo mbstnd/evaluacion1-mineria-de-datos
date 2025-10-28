@@ -10,7 +10,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 
 # 2️⃣ Cargar y exploracion de los datos
-df = pd.read_csv(r'c:/workspace/01-mineria-de-datos/student-por.csv')
+df = pd.read_csv(r'c:/workspace/01-mineria-de-datos/StudentsPerformance.csv')
 print("\n 📏 Dimensiones del dataset:", df.shape)
 print("\n 📊 Tipos de datos por columna:\n", df.dtypes)
 print("\n 🧾 Primeras filas del dataset:\n", df.head())
@@ -28,23 +28,23 @@ print('\n Valores faltantes por columna:\n', missing_values)
 # 4️⃣ Transformacion de datos categóricos ( female = 0, male = 1 )
 
 # Verificar la columna de género 'y su distribución
-print("\n 🔍 Análisis de la columna 'sex' (género):")
-print(f"  Valores únicos: {df['sex'].unique()}")
+print("\n 🔍 Análisis de la columna 'gender' (género):")
+print(f"  Valores únicos: {df['gender'].unique()}")
 
-df['sex_encoded'] = df['sex'].map({'F': 0, 'M': 1})
+df['gender_encoded'] = df['gender'].map({'female': 0, 'male': 1})
 
 
 
 # Mostrar el mapeo realizado
 print("\n✅ Transformación aplicada:")
-print(f"  {df['sex'].unique()[0]} → {df['sex_encoded'].unique()[0]}")
-print(f"  {df['sex'].unique()[1]} → {df['sex_encoded'].unique()[1]}")
+print(f"  {df['gender'].unique()[0]} → {df['gender_encoded'].unique()[0]}")
+print(f"  {df['gender'].unique()[1]} → {df['gender_encoded'].unique()[1]}")
 
 # Verificar el resultado
 print("\n📊 Comparación antes y después:")
 comparison = pd.DataFrame({
-      'sex_original': df['sex'].head(10),
-      'sex_encoded': df['sex_encoded'].head(10)
+      'gender_original': df['gender'].head(10),
+      'gender_encoded': df['gender_encoded'].head(10)
   })
 print(comparison)
 
@@ -52,7 +52,7 @@ print(comparison)
 # 5️⃣ Normalización de datos con Min-Max Scaling
 
 # Columnas de puntajes a normalizar
-score_columns = ['G1', 'G2', 'G3']
+score_columns = ['math score', 'reading score', 'writing score']
 print("\n 📊 Análisis ANTES de la normalización:")
 print("="*60)
 for col in score_columns:
@@ -87,7 +87,7 @@ print("=" * 60)
 
 plt.figure(figsize=(10, 6))
 sns.boxplot(data=df[score_columns], palette="Set3")
-plt.title('Boxplot de Puntajes G1, G2 y G3')
+plt.title('Boxplot de Puntajes de Estudiantes')
 plt.ylabel('Puntaje')
 plt.xlabel('Período')
 plt.grid(True, alpha=0.3)
@@ -158,8 +158,9 @@ print("\n✅ PCA aplicado con éxito.")
 print(f"🔸 Varianza explicada por cada componente: {pca.explained_variance_ratio_}")
 print(f"🔹 Varianza total explicada: {np.sum(pca.explained_variance_ratio_) * 100:.2f}%")
 
-# Crear categorías basadas en G3
-df['performance_category'] = pd.qcut(df['G3'], q=3, labels=['Bajo', 'Medio', 'Alto'])
+# Crear categorías basadas en el promedio de las tres calificaciones
+df['average_score'] = df[['math score', 'reading score', 'writing score']].mean(axis=1)
+df['performance_category'] = pd.qcut(df['average_score'], q=3, labels=['Bajo', 'Medio', 'Alto'])
 
 # DataFrame con resultados y categoría
 pca_df = pd.DataFrame(pca_result, columns=['PCA1', 'PCA2'])
