@@ -45,33 +45,57 @@ scikit-learn
 
 ## ⚙️ Proceso de Análisis
 
-### 1️⃣ Carga y exploración de datos  
-- 1000 registros y 8 columnas.  
-- Sin valores faltantes.  
-- Tipos de datos correctamente definidos.
-
-### 2️⃣ Transformación de variables categóricas  
-- Se codificó la columna `gender` → `gender_encoded` (`female=0`, `male=1`).
-
-### 3️⃣ Normalización (Min-Max Scaling)
-- Columnas normalizadas: `math score`, `reading score`, `writing score`.  
-- Rango resultante: `[0, 1]`.
-
-### 4️⃣ Detección de valores atípicos (IQR)
-| Columna | Outliers detectados | Comentario |
-|----------|--------------------|-------------|
-| math score | 8 | Puntajes muy bajos (0–26) |
-| reading score | 6 | Puntajes entre 17–28 |
-| writing score | 5 | Puntajes entre 10–23 |
-
-Los valores atípicos representan casos de bajo rendimiento, no errores.
-
-### 5️⃣ PCA (Análisis de Componentes Principales)
-- Variables utilizadas: `math score`, `reading score`, `writing score`, `gender_encoded`.  
-- **Varianza total explicada:** 96.53%  
-- Permite visualizar con claridad los grupos de rendimiento (`Bajo`, `Medio`, `Alto`).
+### 1️⃣ Carga y exploración de los datos  
+Se cargó el dataset `StudentsPerformance.csv` utilizando **Pandas**.  
+- El conjunto de datos cuenta con **1000 registros** y **8 columnas**.  
+- Los tipos de datos fueron identificados correctamente: 5 columnas categóricas (`object`) y 3 numéricas (`int64`).  
+- No se encontraron valores nulos ni inconsistencias en la estructura del dataset.
 
 ---
+
+### 2️⃣ Transformación de variables categóricas  
+Para preparar los datos antes del análisis numérico, se transformó la columna `gender` en formato numérico:  
+- `female` → 0  
+- `male` → 1  
+Se aplicó la técnica de **Label Encoding**, por ser la más adecuada para variables binarias, permitiendo así su inclusión en procesos estadísticos y de reducción de dimensionalidad como el PCA.
+
+---
+
+### 3️⃣ Normalización (Min-Max Scaling)  
+Con el fin de estandarizar las escalas de los puntajes, se utilizó **Min-Max Scaling** sobre las columnas:  
+- `math score`  
+- `reading score`  
+- `writing score`  
+
+De esta forma, los valores fueron ajustados al rango **[0, 1]**, manteniendo la proporcionalidad de los datos originales y mejorando la interpretación en análisis posteriores.
+
+---
+
+### 4️⃣ Detección de valores atípicos (IQR)  
+Se detectaron posibles valores atípicos mediante el método del **Rango Intercuartílico (IQR)** y la visualización con **gráficos de caja (boxplots)**.  
+
+| Columna | Outliers detectados | Comentario |
+|----------|--------------------|-------------|
+| math score | 8 | Puntajes extremadamente bajos (0–26) |
+| reading score | 6 | Puntajes bajos entre 17–28 |
+| writing score | 5 | Puntajes bajos entre 10–23 |
+
+Estos valores atípicos fueron **conservados** en el análisis, dado que representan casos reales de bajo rendimiento académico y no errores de registro.
+
+---
+
+### 5️⃣ Análisis de Componentes Principales (PCA)  
+Se aplicó **PCA (Principal Component Analysis)** sobre las variables numéricas:  
+- `math score`, `reading score`, `writing score`, `gender_encoded`
+
+Este método permite **reducir la dimensionalidad del dataset** y visualizar patrones de correlación entre variables.  
+El análisis mostró que los **dos primeros componentes principales explican el 96.53% de la varianza total**, demostrando que los tres puntajes presentan una fuerte relación entre sí y que la información esencial puede representarse en solo dos dimensiones.  
+
+El gráfico PCA evidenció tres grupos diferenciados de estudiantes, clasificados por rendimiento:  
+- **Bajo**  
+- **Medio**  
+- **Alto**
+
 
 ## 📈 Resultados Principales
 
