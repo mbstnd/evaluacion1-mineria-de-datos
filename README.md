@@ -31,15 +31,16 @@ scikit-learn
 
 📊 Estructura del Dataset
 
-Columna	Descripción
-gender	Género del estudiante (male, female)
-race/ethnicity	Grupo étnico o racial (group A a group E)
-parental level of education	Nivel educativo de los padres
-lunch	Tipo de almuerzo recibido (standard, free/reduced)
-test preparation course	Curso de preparación completado (none, completed)
-math score	Puntaje en Matemáticas (0–100)
-reading score	Puntaje en Lectura (0–100)
-writing score	Puntaje en Escritura (0–100)
+| Columna | Descripción |
+|----------|-------------|
+| gender | Género del estudiante (`male`, `female`) |
+| race/ethnicity | Grupo étnico o racial (`group A` a `group E`) |
+| parental level of education | Nivel educativo de los padres |
+| lunch | Tipo de almuerzo recibido (`standard`, `free/reduced`) |
+| test preparation course | Curso de preparación completado (`none`, `completed`) |
+| math score | Puntaje en Matemáticas (0–100) |
+| reading score | Puntaje en Lectura (0–100) |
+| writing score | Puntaje en Escritura (0–100) |
 
 ⚙️ Proceso de Análisis
 
